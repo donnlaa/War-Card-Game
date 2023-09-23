@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var playerCard = "card7"
+    @State var cpuCard = "card13"
+    
+    @State var playerScore = 0
+    @State var cpuScore = 0
+    
     var body: some View {
         
         ZStack{
@@ -21,29 +28,36 @@ struct ContentView: View {
                 Image("logo")
                 
                 HStack{
-                    Image("card2")
+                    Image(playerCard)
                         .padding()
                         .shadow(radius: 15)
-                    Image("card3")
+                    Image(cpuCard)
                         .padding()
                         .shadow(radius: 15)
                 }
                 .padding()
-                Image("button")
+                
+                
+                Button {
+                    deal()
+                } label: {
+                    Image("button")
+                }
+
                 
                 HStack{
                     
                     VStack{
                         Text("Player")
                             .padding()
-                        Text("0")
+                        Text(String(playerScore))
                     }
                     .padding()
                     
                     VStack{
                         Text("CPU")
                             .padding()
-                        Text("0")
+                        Text(String(cpuScore))
                     }
                     .padding()
                 }
@@ -52,6 +66,24 @@ struct ContentView: View {
             }
         }
     }
+    
+    func deal(){
+        var playerCardValue = Int.random(in: 2...14)
+        playerCard = "card" + String(playerCardValue)
+        
+        var cpuCardValue = Int.random(in: 2...14)
+        cpuCard = "card" + String(cpuCardValue)
+        
+        if playerCardValue > cpuCardValue {
+            playerScore += 1
+        }
+        else if playerCardValue < cpuCardValue {
+            cpuScore += 1
+        }
+        else {print("remiza")}
+    }
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
